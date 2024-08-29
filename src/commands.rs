@@ -16,15 +16,10 @@ pub async fn status(
     }).await.expect("Task panicked");
 
 
-    let player_names = server_information
-        .players
-        .sample
-        .expect("Coudln't find players")
-        .into_iter()
-        .map(|x| x.name)
-        .collect::<Vec<_>>()
-        .join(", ");
-
+    let player_names: String = match server_information.players.sample {
+        Some(s) => s.into_iter().map(|x| x.name).collect::<Vec<_>>().join(", "),
+        None => String::from("None")
+    };
 
     let embed = poise::serenity_prelude::CreateEmbed::default().color(BLUE)
         .title("Sexybabeycraft Status")
