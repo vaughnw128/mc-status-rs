@@ -11,21 +11,27 @@ pub async fn status(
 
     let server_ip = var("MC_SERVER_IP").expect("Server IP missing");
 
-    let (ping, server_information) = tokio::task::spawn_blocking(move || {
-        mcping::get_status(&server_ip, Duration::from_secs(10)).expect("Could not ping the server.")
-    }).await.expect("Task panicked");
-
-
-    let player_names: String = match server_information.players.sample {
-        Some(s) => s.into_iter().map(|x| x.name).collect::<Vec<_>>().join(", "),
-        None => String::from("None")
+    let embed = match tokio::task::spawn_blocking(move || {
+        mcping::get_status(&server_ip, Duration::from_secs(10))
+    }).await? {
+        Ok((ping, server_information)) => {
+            let player_names: String = match server_information.players.sample {
+                Some(s) => s.into_iter().map(|x| x.name).collect::<Vec<_>>().join(", "),
+                None => String::from("None")
+            };
+            poise::serenity_prelude::CreateEmbed::default().color(BLUE)
+                .title("Sexybabeycraft Status")
+                .description(server_information.description.text().to_string())
+                .field("", format!("**Ping**: `{ping}`"), false)
+                .field("", format!("**Players**: `{player_names}`"), false)
+        }
+        Err(_) => {
+            poise::serenity_prelude::CreateEmbed::default().color(BLUE)
+                .title("Sexybabeycraft Status")
+                .description("cc: <@173232081575346178>")
+                .field("", "Uh oh! Looks like the server is down.", false)
+        }
     };
-
-    let embed = poise::serenity_prelude::CreateEmbed::default().color(BLUE)
-        .title("Sexybabeycraft Status")
-        .description(server_information.description.text().to_string())
-        .field("", format!("**Ping**: `{ping}`"), false)
-        .field("", format!("**Players**: `{player_names}`"), false);
 
     let reply = poise::CreateReply::default().embed(embed);
 
