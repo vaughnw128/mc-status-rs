@@ -25,7 +25,6 @@ pub async fn status(
             };
             poise::serenity_prelude::CreateEmbed::default().color(Color::new(6553467))
                 .title("Sexybabeycraft Status")
-                .thumbnail("https://cdn.vaughn.sh/icon-zHLcOQop.png")
                 .description(server_information.description.text().to_string())
                 .field("**Ping:**", format!("`{ping}`"), false)
                 .field(format!("**Active Players ({player_count}/10):**"), format!("`{player_names}`"), false)
