@@ -1,8 +1,7 @@
 synkronized:
   name: mc-status-rs
   template: single-container
-template_config:
-  name: mc-status-rs
+config:
   size: medium
   vaultSecrets:
     - name: "DISCORD_TOKEN"
