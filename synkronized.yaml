@@ -1,0 +1,11 @@
+name: mc-status-rs
+template: single-container
+size: medium
+vaultSecrets:
+  - name: "DISCORD_TOKEN"
+    path: "mc-status-rs/discord-token"
+env:
+  - name: "MAPS_ADDRESS"
+    value: "https://maps.vaughn.sh"
+  - name: "MC_SERVER_IP"
+    value: "mc.vaughn.sh"
