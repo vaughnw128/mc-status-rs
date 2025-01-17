@@ -1,5 +1,7 @@
-template: single-container
-config:
+synkronized:
+  name: mc-status-rs
+  template: single-container
+template_config:
   name: mc-status-rs
   size: medium
   vaultSecrets:
