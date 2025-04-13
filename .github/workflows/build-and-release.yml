@@ -96,11 +96,11 @@ jobs:
         with:
           context: .
           file: Dockerfile
-          push: ${{ github.ref == 'refs/heads/main' }}
-          cache-from: type=registry,ref=ghcr.io/vaughnw128/mc-status-rs:${{ needs.create-tag.outputs.tag }}
+          push: ${{ github.ref == 'refs/heads/master' }}
+          cache-from: type=registry,ref=ghcr.io/vaughnw128/mc-status-rs:v${{ needs.create-tag.outputs.tag }}
           cache-to: type=inline
           tags: |
-            ghcr.io/vaughnw128/mc-status-rs:${{ needs.create-tag.outputs.tag }}
+            ghcr.io/vaughnw128/mc-status-rs:v${{ needs.create-tag.outputs.tag }}
           build-args: |
             git_sha=${{ github.sha }}
 
@@ -120,4 +120,4 @@ jobs:
           repo: ${{ env.ENV_REPO }}
           token: ${{ secrets.RELEASE_TOKEN }}
           inputs: '{"tag_name": "${{ needs.create-tag.outputs.tag }}", "app_repo": "${{ github.event.repository.name }}", "image": "${{ github.event.repository.full_name }}:${{ needs.create-tag.outputs.tag }}"}'
-          ref: refs/heads/main
+          ref: refs/heads/master
