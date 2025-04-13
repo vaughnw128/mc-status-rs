@@ -10,7 +10,7 @@ jobs:
     name: "Create Git Tag"
     runs-on: "ubuntu-latest"
     outputs:
-      tag: ${{ steps.get-tag.outputs.tag }}
+      tag: ${{ steps.get-tag.outputs.PKG_VERSION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,7 +33,7 @@ jobs:
   create-release:
     name: "Create release"
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    needs: "get-tag"
+    needs: "create-tag"
     runs-on: "ubuntu-latest"
     steps:
       - name: "Check out the repo"
@@ -52,7 +52,7 @@ jobs:
     name: "Upload assets to Github releases"
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     needs:
-     - "get-tag"
+     - "create-tag"
      - "create-release"
     strategy:
       matrix:
