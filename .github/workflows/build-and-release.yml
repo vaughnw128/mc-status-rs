@@ -10,7 +10,7 @@ jobs:
     name: "Create Git Tag"
     runs-on: "ubuntu-latest"
     outputs:
-      tag: ${{ steps.git-tag.outputs.tag }}
+      tag: ${{ steps.get-tag.outputs.tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -24,7 +24,6 @@ jobs:
           echo PKG_VERSION=$(awk -F ' = ' '$1 ~ /version/ { gsub(/["]/, "", $2); printf("%s",$2) }' Cargo.toml) >> $GITHUB_OUTPUT
 
       - name: Set Tag
-        id: git-tag
         shell: "bash"
         run: |
           git tag v${{ steps.get-tag.outputs.PKG_VERSION }} && git push --tags
@@ -46,7 +45,7 @@ jobs:
           # (optional) Path to changelog.
           # changelog: CHANGELOG.md
           branch: "master"
-          ref: refs/tags/v${{ needs.get-tag.outputs.pkg-version }}
+          ref: refs/tags/v${{ needs.get-tag.outputs.tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
   upload-assets:
@@ -71,7 +70,7 @@ jobs:
           bin: "mc-status-rs"
           target: ${{ matrix.target }}
           archive: $bin-${{ matrix.target }}
-          ref: refs/tags/v${{ needs.get-tag.outputs.pkg-version }}
+          ref: refs/tags/v${{ needs.get-tag.outputs.tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build:
@@ -98,10 +97,10 @@ jobs:
           context: .
           file: Dockerfile
           push: ${{ github.ref == 'refs/heads/main' }}
-          cache-from: type=registry,ref=ghcr.io/vaughnw128/mc-status-rs:${{ needs.create-tag.outputs.PKG_VERSION }}
+          cache-from: type=registry,ref=ghcr.io/vaughnw128/mc-status-rs:${{ needs.create-tag.outputs.tag }}
           cache-to: type=inline
           tags: |
-            ghcr.io/vaughnw128/mc-status-rs:${{ needs.create-tag.outputs.PKG_VERSION }}
+            ghcr.io/vaughnw128/mc-status-rs:${{ needs.create-tag.outputs.tag }}
           build-args: |
             git_sha=${{ github.sha }}
 
