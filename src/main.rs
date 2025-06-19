@@ -2,8 +2,8 @@ mod commands;
 
 use poise::serenity_prelude as serenity;
 
-use std::env::var;
 use dotenv::dotenv;
+use std::env::var;
 
 type Error = Box<dyn std::error::Error + Send + Sync>;
 type Context<'a> = poise::Context<'a, Data, Error>;
@@ -35,12 +35,12 @@ async fn main() {
         ..Default::default()
     };
 
-     let framework = poise::Framework::builder()
+    let framework = poise::Framework::builder()
         .setup(move |ctx, _ready, framework| {
             Box::pin(async move {
                 println!("Logged in as {}", _ready.user.name);
                 poise::builtins::register_globally(ctx, &framework.options().commands).await?;
-                Ok(Data{})
+                Ok(Data {})
             })
         })
         .options(options)
@@ -48,8 +48,7 @@ async fn main() {
 
     let token = var("DISCORD_TOKEN")
         .expect("Missing `DISCORD_TOKEN` env var, see README for more information.");
-    let intents =
-        serenity::GatewayIntents::non_privileged();
+    let intents = serenity::GatewayIntents::non_privileged();
 
     let client = serenity::ClientBuilder::new(token, intents)
         .framework(framework)

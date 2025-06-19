@@ -1,0 +1,11 @@
+name: "mc-status-rs"
+image: "ghcr.io/vaughnw128/mc-status-rss"
+size: small
+secrets:
+  - name: "DISCORD_TOKEN"
+    path: "mc-status-rs-discord-token/credential"
+env:
+  - name: "MAPS_ADDRESS"
+    value: "https://maps.vaughn.sh"
+  - name: "MC_SERVER_IP"
+    value: "mc.vaughn.sh"
