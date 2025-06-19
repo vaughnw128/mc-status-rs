@@ -1,5 +1,5 @@
 name: "mc-status-rs"
-image: "ghcr.io/vaughnw128/mc-status-rss"
+image: "ghcr.io/vaughnw128/mc-status-rs"
 size: small
 secrets:
   - name: "DISCORD_TOKEN"
