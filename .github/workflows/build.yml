@@ -42,7 +42,7 @@ jobs:
         with:
           push: ${{ github.ref == 'refs/heads/main' }}
           platforms: linux/amd64
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:${{ steps.tag.outputs.new_release_version }}
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}
           cache-to: type=inline
           tags: |
             ghcr.io/${{ github.repository }}:${{ steps.tag.outputs.new_release_version }}

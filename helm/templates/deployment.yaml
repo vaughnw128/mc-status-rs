@@ -23,7 +23,7 @@ spec:
         - name: {{$v.name}}
           valueFrom:
             secretKeyRef:
-              name: sexybabeycord-secrets
+              name: ${{ $.Chart.Name }}-secrets
               key: {{$v.name}}
         {{ end }}
         {{- range $v := .Values.env }}
