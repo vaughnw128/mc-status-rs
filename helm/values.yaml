@@ -1,11 +1,7 @@
-name: "mc-status-rs"
 image: "ghcr.io/vaughnw128/mc-status-rs"
 size: small
-secrets:
-  - name: "DISCORD_TOKEN"
-    path: "mc-status-rs-discord-token/credential"
-env:
-  - name: "MAPS_ADDRESS"
-    value: "https://maps.vaughn.sh"
-  - name: "MC_SERVER_IP"
-    value: "mc.vaughn.sh"
+secretVars:
+  DISCORD_TOKEN: "mc-status-rs-discord-token/credential"
+envVars:
+  MAPS_ADDRESS: "https://maps.vaughn.sh"
+  MC_SERVER_IP: "mc.vaughn.sh"
