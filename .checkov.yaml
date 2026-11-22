@@ -3,3 +3,11 @@ skip-check:
   - CKV_DOCKER_2 # health is handled by Kubernetes probes
   - CKV_DOCKER_3 # runtime user is enforced by the Helm security context
   - CKV_SECRET_6 # false positives on placeholders and ExternalSecret templates
+  - CKV_K8S_15 # IfNotPresent is correct with digest-pinned images
+  - CKV_K8S_21 # namespace is set by Flux at deploy time
+  - CKV_K8S_43 # the release stamps imageDigest into the chart; the repo values only carry a tag
+  - CKV2_K8S_6 # NetworkPolicy is managed at the platform level
+  - CKV_K8S_8 # Discord bot has no HTTP endpoint to probe
+  - CKV_K8S_9 # Discord bot has no HTTP endpoint to probe
+  - CKV_K8S_11 # CPU limits left unset on purpose to avoid throttling
+  - CKV_K8S_35 # single-container passes secretVars as env vars
