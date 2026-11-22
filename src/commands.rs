@@ -1,5 +1,4 @@
 use crate::{Context, Error};
-use mcping;
 use poise::serenity_prelude::colours::roles::BLUE;
 use poise::serenity_prelude::Color;
 use std::env::var;

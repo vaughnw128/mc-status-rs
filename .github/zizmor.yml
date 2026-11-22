@@ -1,0 +1,9 @@
+rules:
+  unpinned-uses:
+    config:
+      policies:
+        "vaughnw128/hakoniwa/*": ref-pin
+        "*": hash-pin
+  dangerous-triggers:
+    ignore:
+      - commands.yml

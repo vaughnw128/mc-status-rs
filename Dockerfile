@@ -1,8 +1,8 @@
-FROM rust:1.83
-LABEL authors="vaughnw128"
+FROM cgr.dev/chainguard/glibc-dynamic:latest
 
-COPY . .
+ARG TARGETARCH
+ARG BINARY_NAME=mc-status-rs
 
-RUN cargo build --release
+COPY dist/linux/${TARGETARCH}/${BINARY_NAME} /usr/local/bin/app
 
-CMD ["./target/release/mc-status-rs"]
+ENTRYPOINT ["/usr/local/bin/app"]
